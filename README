@@ -1,1 +1,5 @@
+#v0.2	Znaczna poprawa estetyki. Utworzenie klasy TaskManager.
+		Rozmieszczenie funkcji w osobnych plikach. Liczenie błędy.
+		Dodanie użytecznej funkcji zamieniającej string w tablicę liczb.
+
 #v0.1	Podział zadań na n procesorów, działa dobrze tylko dla dwóch
