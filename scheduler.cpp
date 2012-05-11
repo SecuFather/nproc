@@ -1,15 +1,35 @@
 #include "scheduler.h"
 
-int approxScheduleForNProc(TaskManager *tm){
+int findDeviation(TaskManager *tm){
+	int max=0, nproc = tm->procCount();
+	int n = tm->taskCount();
+	int *res = new int[nproc];
+
+	memset(res, 0, sizeof(int)*nproc);
+	for(int i=0; i<n; ++i){
+		res[tm->taskProc(i)+1] += tm->taskValue(i);
+	}
+	for(int i=0; i<nproc; ++i){
+		if(res[i] > max){
+			max = res[i];
+		}
+	}
+
+	delete[] res;
+	return max - tm->cmaxx();
+}
+
+int preScheduleForNProc(TaskManager *tm){
 	int cmax = tm->cmaxx();
 	int nproc = tm->procCount();
 	int *tab = new int[cmax+1];
-	int dev, it, max=-1, task, v, x;
+	int it, task, v, x;
 
 	for(int k=0; k<nproc-1; ++k){
 		memset(tab, -1, sizeof(int)*(cmax+1));
 		tab[0] = 0;
 
+		tm->resetIterator();
 		while((task = tm->nextTask()) >= 0 && tab[cmax] < 0){
 			v = tm->taskValue(task);
 			for(int i=cmax; i>=v; --i){
@@ -21,17 +41,15 @@ int approxScheduleForNProc(TaskManager *tm){
 		}
 
 		it=cmax+1;
-		dev = 0;
-		while(tab[--it] < 0 && it > 0 && ++dev);
+		while(tab[--it] < 0);
 		while(it>0){
 			tm->setUsed(tab[it], k);
 			it -= tm->taskValue(tab[it]);
 		}
-		max = (dev > max ? dev : max);
 	}
 
 	delete[] tab;
-	return max;
+	return findDeviation(tm);
 }
 
 string procScheduleToStr(TaskManager *tm){

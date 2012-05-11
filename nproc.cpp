@@ -4,10 +4,10 @@
 
 int main(){
 	int *task=0;
-	int n = fillTab("1 5 3 1 4 2 3 2", &task);
+	int n = fillTab("1 5 5 25 28 23 14 7 3 4 7", &task);
 
-	TaskManager *tm = new TaskManager(task, n, 3);
-	approxScheduleForNProc(tm);
+	TaskManager *tm = new TaskManager(task, n, 4);
+	cout << "(" << preScheduleForNProc(tm) << ")" << endl;
 	cout << procScheduleToStr(tm);
 
 	delete tm;

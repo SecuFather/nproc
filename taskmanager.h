@@ -12,6 +12,9 @@ private:
 
 	//returns sum of elements
 	int sumElements(int *ar, int n);
+
+	//returns cmax
+	int findMax(int *ar, int n);
 public:
 	TaskManager(int *task, int n, int nproc);
 	~TaskManager();
@@ -29,7 +32,7 @@ public:
 	inline void setAllUnused(){ memset(used, -1, sizeof(int)*n); }
 
 	//returns cmax
-	inline int cmaxx()const{ return cmax; }
+	inline int cmaxx()const{ return cmax ; }
 
 	//returns proc id for task
 	inline int taskProc(int at)const{ return used[at]; }
@@ -39,6 +42,12 @@ public:
 
 	//returns proc count
 	inline int procCount()const{ return nproc; }
+
+	//resets iterator
+	inline void resetIterator(){ it = -1; }
+
+	//returns margin
+	inline int marginn()const{ return margin; }
 };
 
 
