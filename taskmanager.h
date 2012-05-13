@@ -7,7 +7,7 @@ using namespace std;
 
 class TaskManager{
 private:
-	int *task, *used;
+	int *complete, *task, *used;
 	int cmax, it, margin, n, nproc, sum;
 
 	//returns sum of elements
@@ -25,7 +25,7 @@ public:
 	//returns task value
 	inline int taskValue(int at)const{ return task[at]; }
 
-	//sets task as used at given proc
+	//sets task used at given proc
 	inline void setUsed(int at, int proc){ used[at] = proc; }
 
 	//sets all tasks unused
@@ -48,6 +48,27 @@ public:
 
 	//returns margin
 	inline int marginn()const{ return margin; }
+
+	//returns sum of all elements
+	inline int summ()const{ return sum; }
+
+	//returns completness
+	inline int completee(int at)const{ return complete[at]; }
+
+	//sets task complete at given proc
+	inline void setComplete(int at, int proc){ complete[at] = proc; }
+
+	//sets all task uncomplete
+	inline void setAllUncomplete(){ for(int i=0; i<n; ++i)if(complete[i] < nproc-1)complete[i]= -1; }
+
+	//change nproc with change param
+	inline void changeNproc(int change){ nproc += change; }
+
+	//fills solved array
+	inline void fillSolved(int *ar){ for(int i=0; i<n; ++i)ar[i] = (complete[i]<0 ? used[i] : complete[i]); }
+
+	//bla bla
+	inline void saveSolved(int *ar){ memcpy(used, ar, sizeof(int)*n); }
 };
 
 

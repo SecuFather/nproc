@@ -19,3 +19,13 @@ int fillTab(const char* str, int **tab){
 	}
 	return n;
 }
+
+int fillTab(int n, int maxValue, int **tab){
+	srand(time(0));
+	tab[0] = new int[n];
+
+	for(int i=0; i<n; ++i){
+		tab[0][i] = rand() % maxValue + 1;
+	}
+	return n;
+}

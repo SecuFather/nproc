@@ -1,3 +1,6 @@
+#v0.4	Dodano optymalną funkcję szeregującą dla 3 procesorów.
+    	Do poprawy estetyka, optymalność oraz testowanie.
+
 #v0.3	Poprawki w funkcji wstępnie szeregującej.
 
 #v0.2	Znaczna poprawa estetyki. Utworzenie klasy TaskManager.

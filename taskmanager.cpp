@@ -1,12 +1,13 @@
 #include "taskmanager.h"
 
 TaskManager::TaskManager(int *task, int n, int nproc) :
-	task(new int[n]), used(new int[n]), it(-1), n(n), nproc(nproc)
+	complete(new int[n]), task(new int[n]), used(new int[n]), it(-1), n(n), nproc(nproc)
 {
 	int tmp;
 
 	setAllUnused();
 	memcpy(this->task, task, sizeof(int)*n);
+	memset(complete, -1, sizeof(int)*n);
 
 	sum = sumElements(task, n);
 	margin = (sum % nproc != 0);
@@ -42,7 +43,7 @@ int TaskManager::findMax(int *ar, int n){
 
 int TaskManager::nextTask(){
 	while(++it < n){
-		if(used[it] < 0){
+		if(used[it] < 0 && complete[it] < 0){
 			return it;
 		}
 	}
