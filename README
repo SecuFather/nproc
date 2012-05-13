@@ -1,5 +1,7 @@
-#v0.4	Dodano optymalną funkcję szeregującą dla 3 procesorów.
-    	Do poprawy estetyka, optymalność oraz testowanie.
+#v0.5	Nadal nieestetyczny i nie do końca sprawdzony, ale wydaje się, że działa.
+
+#v0.4	Dodano funkcję szeregującą dla 3 procesorów.
+    	Do poprawy estetyka, optymalizacja algorytmu i testy. 
 
 #v0.3	Poprawki w funkcji wstępnie szeregującej.
 
@@ -7,4 +9,4 @@
     	Rozmieszczenie funkcji w osobnych plikach. Liczenie błędy.
     	Dodanie użytecznej funkcji zamieniającej string w tablicę liczb.
 
-#v0.1	Podział zadań na n procesorów, działa dobrze tylko dla dwóch
+#v0.1	Podział zadań na n procesorów, działa dobrze tylko dla dwóch.

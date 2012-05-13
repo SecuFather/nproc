@@ -55,17 +55,17 @@ int preScheduleForNProc(TaskManager *tm){
 	return findDeviation(tm);
 }
 
-int scheduleForThreeProc(TaskManager *tm){
+int scheduleForNProc(TaskManager *tm){
+	tm->setAllUnused();
 	int dev0 = preScheduleForNProc(tm);
-	cout << procScheduleToStr(tm);
-	if(!dev0){
+	int nproc = tm->procCount();
+	if(!dev0 || nproc < 3){
 		return 0;
 	}
 	int dev = dev0;
 	int cmax = tm->cmaxx();
 	int sum = tm->summ();
 	int n = tm->taskCount();
-	int nproc = tm->procCount();
 	int size = (nproc-1) * tm->cmaxx() + 1;
 	int at, min, pos, task, v, x;
 	int *solved = new int[n];
@@ -132,9 +132,8 @@ int scheduleForThreeProc(TaskManager *tm){
 			it[stos.top()] = tab[stos.top()].begin();
 			stos.pop();
 		}
-		tm->setAllUnused();
 		tm->changeNproc(-1);
-		dev = preScheduleForNProc(tm);
+		dev = scheduleForNProc(tm);
 		x = sum-pos-cmax;
 		dev = (dev > x ? dev : x);
 		if(dev < min){

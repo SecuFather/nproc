@@ -14,7 +14,7 @@ int findDeviation(TaskManager *tm);
 int preScheduleForNProc(TaskManager *tm);
 
 //schedule tasks for two processors
-int scheduleForThreeProc(TaskManager *tm);
+int scheduleForNProc(TaskManager *tm);
 
 //returns string describing proc schedule
 string procScheduleToStr(TaskManager *tm);
