@@ -1,7 +1,8 @@
 #include "taskmanager.h"
 
 TaskManager::TaskManager(int *task, int n, int nproc) :
-	complete(new int[n]), task(new int[n]), used(new int[n]), it(-1), n(n), nproc(nproc)
+	complete(new int[n]), task(new int[n]), used(new int[n]),
+	it(-1), n(n), nproc(nproc)
 {
 	int tmp;
 
@@ -21,6 +22,7 @@ TaskManager::TaskManager(int *task, int n, int nproc) :
 TaskManager::~TaskManager(){
 	delete[] used;
 	delete[] task;
+	delete[] complete;
 }
 
 int TaskManager::sumElements(int *ar, int n){

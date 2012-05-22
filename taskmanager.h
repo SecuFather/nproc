@@ -69,6 +69,10 @@ public:
 
 	//bla bla
 	inline void saveSolved(int *ar){ memcpy(used, ar, sizeof(int)*n); }
+
+	//bla
+	inline void setSum(int change){ sum = change; }
+
 };
 
 

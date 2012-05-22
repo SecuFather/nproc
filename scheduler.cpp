@@ -8,7 +8,7 @@ int findDeviation(TaskManager *tm){
 	memset(res, 0, sizeof(int)*nproc);
 	tm->resetIterator();
 	for(int i=0; i<n; ++i){
-		if(tm->completee(i) < 0){
+		if(tm->completee(i) < tm->procCount()-1){
 			res[tm->taskProc(i)+1] += tm->taskValue(i);
 		}
 	}
@@ -19,7 +19,8 @@ int findDeviation(TaskManager *tm){
 	}
 
 	delete[] res;
-	return max - tm->cmaxx();
+	max -= tm->cmaxx();
+	return (max < 0 ? 0 : max);
 }
 
 int preScheduleForNProc(TaskManager *tm){
@@ -60,8 +61,9 @@ int scheduleForNProc(TaskManager *tm){
 	int dev0 = preScheduleForNProc(tm);
 	int nproc = tm->procCount();
 	if(!dev0 || nproc < 3){
-		return 0;
+		return dev0;
 	}
+
 	int dev = dev0;
 	int cmax = tm->cmaxx();
 	int sum = tm->summ();
@@ -124,7 +126,7 @@ int scheduleForNProc(TaskManager *tm){
 			}
 		}
 		for(int i=0; i<n; ++i){
-			if(tm->taskProc(i) < 0){
+			if(tm->taskProc(i) < 0 && tm->completee(i) < nproc-1){
 				tm->setComplete(i, nproc-2);
 			}
 		}
@@ -133,14 +135,17 @@ int scheduleForNProc(TaskManager *tm){
 			stos.pop();
 		}
 		tm->changeNproc(-1);
+		tm->setSum(pos);
 		dev = scheduleForNProc(tm);
+		tm->setSum(sum);
+		tm->changeNproc(1);
 		x = sum-pos-cmax;
 		dev = (dev > x ? dev : x);
 		if(dev < min){
 			tm->fillSolved(solved);
 			min  = dev;
 		}
-		tm->changeNproc(1);
+
 		tm->setAllUncomplete();
 		tm->setAllUnused();
 	}while(min != 0);
@@ -149,7 +154,6 @@ int scheduleForNProc(TaskManager *tm){
 	delete[] it;
 	delete[] tab;
 	delete[] solved;
-	cout << dev0-min << endl;
 	return min;
 }
 
