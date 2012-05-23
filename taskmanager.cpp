@@ -2,7 +2,7 @@
 
 TaskManager::TaskManager(int *task, int n, int nproc) :
 	complete(new int[n]), task(new int[n]), used(new int[n]),
-	it(-1), n(n), nproc(nproc)
+	it(-1), maxNproc(nproc), n(n), nproc(nproc)
 {
 	int tmp;
 
@@ -16,7 +16,7 @@ TaskManager::TaskManager(int *task, int n, int nproc) :
 	if((tmp = findMax(task, n)) > cmax){
 		cmax = tmp;
 	}
-
+	dev = sum;
 }
 
 TaskManager::~TaskManager(){

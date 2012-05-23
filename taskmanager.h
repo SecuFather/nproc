@@ -3,12 +3,13 @@
 
 #include <list>
 #include <cstring>
+#include <iostream>
 using namespace std;
 
 class TaskManager{
 private:
 	int *complete, *task, *used;
-	int cmax, it, margin, n, nproc, sum;
+	int cmax, dev, it, margin, maxNproc, n, nproc, sum;
 
 	//returns sum of elements
 	int sumElements(int *ar, int n);
@@ -67,13 +68,28 @@ public:
 	//fills solved array
 	inline void fillSolved(int *ar){ for(int i=0; i<n; ++i)ar[i] = (complete[i]<0 ? used[i] : complete[i]); }
 
-	//bla bla
+	//saves solved
 	inline void saveSolved(int *ar){ memcpy(used, ar, sizeof(int)*n); }
 
-	//bla
+	//sets sum
 	inline void setSum(int change){ sum = change; }
 
+	//sets deviation if nproc is maxNproc and returns current deviation
+	int setDev(int x){
+		if(maxNproc == nproc){
+			if(x < dev){
+				dev = x;
+				cout << dev << endl;
+			}
+			return dev;
+		}
+		return x > dev ? dev : x;
+	}
+
+	//change cmax
+	inline void setCmax(int change){ cmax += change; }
 };
+
 
 
 #endif /* TASKMANAGER_H_ */

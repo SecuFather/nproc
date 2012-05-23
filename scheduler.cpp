@@ -44,7 +44,7 @@ int preScheduleForNProc(TaskManager *tm){
 			}
 		}
 
-		it=cmax+1;
+		it = cmax+1;
 		while(tab[--it] < 0);
 		while(it > 0){
 			tm->setUsed(tab[it], k);
@@ -58,13 +58,12 @@ int preScheduleForNProc(TaskManager *tm){
 
 int scheduleForNProc(TaskManager *tm){
 	tm->setAllUnused();
-	int dev0 = preScheduleForNProc(tm);
 	int nproc = tm->procCount();
-	if(!dev0 || nproc < 3){
-		return dev0;
+	int dev = tm->setDev(preScheduleForNProc(tm));
+	if(!dev || nproc < 3){
+		return dev;
 	}
 
-	int dev = dev0;
 	int cmax = tm->cmaxx();
 	int sum = tm->summ();
 	int n = tm->taskCount();
@@ -143,7 +142,7 @@ int scheduleForNProc(TaskManager *tm){
 		dev = (dev > x ? dev : x);
 		if(dev < min){
 			tm->fillSolved(solved);
-			min  = dev;
+			min  = tm->setDev(dev);
 		}
 
 		tm->setAllUncomplete();
